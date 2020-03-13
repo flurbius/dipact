@@ -78,8 +78,12 @@ export default class GameListElement extends React.Component {
 		}
 		return { Properties: { Nations: [] } };
 	}
+	/** This takes a date string in the form 2020-20-20T20:20:20.202020Z and returns the date portion. */
+	dateFromISO8601(isoDate) {
+		return isoDate.split("T")[0]
+	}
 	render() {
-		var expandedGameCells = ["Created at", this.props.game.Properties.CreatedAt,
+		var expandedGameCells = ["Created on", dateFromISO8601(this.props.game.Properties.CreatedAt),
 								 "Nation allocation", this.props.game.Properties.NationAllocation == 1 ? "Preferences" : "Random"
 								];
 		if (this.props.game.Properties.MinRating) {
@@ -118,8 +122,8 @@ export default class GameListElement extends React.Component {
 				allChannels[this.props.game.Properties.DisableConferenceChat].push("Conference");
 				allChannels[this.props.game.Properties.DisableGroupChat].push("Group");
 				allChannels[this.props.game.Properties.DisablePrivateChat].push("Private");
-				expandedGameCells.push("Disabled channels", allChannels[false].join(","));
-				expandedGameCells.push("Enabled channels", allChannels[true].join(","));
+				expandedGameCells.push("Disabled channels", allChannels[false].join(", "));
+				expandedGameCells.push("Enabled channels", allChannels[true].join(", "));
 			}
 		}
 
